@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css?family=Russo+One");
+body {
+  font-family: Russo One;
+  user-select: none;
+  background-color: #aa5e00;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#drum-config {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  background: #e6e6e6;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 10px;
+}
+
+#key-pad {
+  border-radius: 50%;
+  padding: 30px;
+  background-color: #f68900;
+  width: 200px;
+}
+
+.drum-pad {
+  width: 50px;
+  height: 50px;
+  background: #4d4d4d;
+  color: white;
+  font-weight: 800;
+  font-size: 1.2em;
+  padding: 0 10px 10px 0px;
+  box-shadow: 6px 6px 1px black;
+  margin: 1.5px;
+  border-bottom: #343434 solid 8px;
+  border-right: #343434 solid 8px;
+  border-left: #343434 solid 5px;
+  border-top: #343434 solid 3px;
+  border-radius: 5px;
+}
+
+.drum-pad:hover {
+  background: #404040;
+}
+
+.drum-pad:active {
+  background: #393939;
+  box-shadow: 2px 2px 1px black;
+  transform: translate(4%, 4%);
+  border-bottom: #1a1a1a solid 8px;
+  border-right: #1a1a1a solid 8px;
+  border-left: #1a1a1a solid 5px;
+  border-top: #1a1a1a solid 3px;
+}
+
+.drum-pad-pressed {
+  background: #393939;
+  box-shadow: 2px 2px 1px black;
+  transform: translate(4%, 4%);
+  border-bottom: #1a1a1a solid 8px;
+  border-right: #1a1a1a solid 8px;
+  border-left: #1a1a1a solid 5px;
+  border-top: #1a1a1a solid 3px;
+}
+
+.row2 {
+  margin-left: 15px;
+}
+
+.row3 {
+  margin-left: 30px;
+}
