@@ -1,5 +1,5 @@
 # React Apps
-Apps created with React.
+Click on the app's title to preview it at codepen.
 
 ## [Drum Machine](https://codepen.io/pinheirocosta/pen/gOWBQNP)
 
