@@ -1,5 +1,3 @@
-# Markdown Preview with React
+# Markdown Preview
 
-A Pen created on CodePen.io. Original URL: [https://codepen.io/pinheirocosta/pen/vYmjGwK](https://codepen.io/pinheirocosta/pen/vYmjGwK).
-
-
+View at [Codepen](https://codepen.io/pinheirocosta/pen/vYmjGwK).
