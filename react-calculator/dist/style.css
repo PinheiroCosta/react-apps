@@ -1,0 +1,100 @@
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+@font-face {
+  font-family: "Digital";
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot");
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff") format("woff"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7") format("svg");
+}
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #173e17;
+}
+
+#calculator {
+  width: 300px;
+  height: 450px;
+  background: black;
+  border: 3px solid black;
+  border-radius: 5%;
+  box-shadow: 5px 5px 5px #000;
+}
+
+#display {
+  width: auto;
+  height: 70px;
+  background: #525252;
+  border-radius: 15px 15px 5px 5px;
+  box-shadow: 5px 2px 5px #000 inset;
+  margin: 12px;
+  font-family: digital;
+  font-size: 50px;
+  color: white;
+  text-align: right;
+  padding-right: 10px;
+  direction: rtl;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#keyboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 3px;
+  color: white;
+  margin: 25px 5px 5px;
+}
+
+button {
+  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+  background: #555555;
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+  box-shadow: 1px 1px 5px #333 inset;
+  border-color: #555;
+}
+
+.gridBlock {
+  height: 65px;
+}
+
+.clear {
+  grid-area: 1/1/1/3;
+}
+.clear > button {
+  background: #cc0000;
+  box-shadow: 1px 1px 5px maroon inset;
+  border-radius: 20px 2px 2px 2px;
+}
+
+.zero {
+  grid-area: 5/1/5/3;
+}
+.zero > button {
+  border-radius: 2px 2px 2px 20px;
+}
+
+.equals {
+  grid-area: 4/4/6/4;
+}
+.equals > button {
+  background: #0000b3;
+  border-radius: 2px 2px 20px;
+  box-shadow: 1px 1px 5px #000099 inset;
+}
+
+.operator > button {
+  background: #808;
+  box-shadow: 1px 1px 5px #555555 inset;
+}
+
+.multiply > button {
+  background: #808;
+  box-shadow: 1px 1px 5px #555555 inset;
+  border-radius: 2px 20px 2px 2px;
+}
