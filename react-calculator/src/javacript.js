@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './style.scss';
+
 const buttonConfig = {
     clear: "AC",    
     divide: "/",
@@ -127,41 +131,54 @@ class Calculator extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            // estado do display
             display: 0,
-            // histórico do display
-            history: []            
+            history: [],
+            expression: []
         }
         this.handleClick = this.handleClick.bind(this);
     }
     componentDidMount() {
         document.addEventListener('click', this.handleClick);
     }
-    handleClick(event) {
+    handleClick(event) {        
+        // valor mostrado no display
         const displayVisor = this.state.display;
-        const displayLength = displayVisor.length;
+        // quantidade de caracteres do visor
+        const displayLength = displayVisor.length-1;
+        // Ultimo digito do visor
+        const lastDigitDisplayed = displayVisor[displayLength];
+        // está dentro do limite de caracteres?
         const notInMaxLimit = displayVisor.toString().length < 25;
-        const firstIsZero = displayVisor === 0;
-        const displayVisorHasDot = displayVisor
-        .toString()
-        .split('')
-        .some((value) => value == ".");
-
+        // o primeiro digito é zero?
+        const firstIsZero = displayVisor === 0;              
+        // Id do elemento clicado
         const clickedId = event.target.id;
+        // nome do botao baseado no id do elemento clicado
         const clickedKey = buttonConfig[clickedId];
+        // o botao clicado é um número inteiro?
         const isNumber = Number.isInteger(clickedKey);
+        // o botão clicado é um operador?
         const clickedInOperator = ["+", "-", "/", "X"]
         .some((value) => value === clickedKey);
+        // existe algum operador no ultimo digito?
         const lastDisplayIsOperator = ["+", "-", "/", "X"].
         some(
             (value) => value === displayVisor
-            .toString()[displayLength-1]
-        );    
-        // se o id do elemento clicado estiver na lista de botões...
-        if (clickedId in buttonConfig){            
+            .toString()[displayLength]
+        );
+        // lista de termos matematicos
+        const terms = String(displayVisor)
+        .split(/\-|\+|\/|\X/g);
+        // cópia do histórico com o ultimo botao clicado
+        const history = this.state.history.concat(
+                                displayVisor + clickedKey
+                            )
+        
+        if (clickedId in buttonConfig){
+            // se o id do elemento clicado estiver na lista de botões...
             switch(true){
                 case (isNumber):
-                    // se o primeiro click for zero...
+                    // caso o primeiro clique seja zero...
                     if (firstIsZero && clickedKey === 0){
                         console.log(
                             "left zeroes now allowed"
@@ -173,43 +190,88 @@ class Calculator extends React.Component {
                             // atualiza o estado do display
                             display: String(
                                 displayVisor + clickedKey
-                            ),
+                            ),                            
                             // atualiza o estado do histórico
-                            history: this.state.history.concat(
-                                displayVisor + clickedKey
-                            )                            
+                            history: history,
+                            expression: history[history.length-1]
                         }))
-                        console.log(this.state.history);
-                    } 
+                    }                    
                     // se NÃO estiver no limite de caracteres.
                     else {
                         console.log("max reached")
                     }                    
-                    console.log(clickedKey, "<-- numérico");
                     break;
 
-                case (clickedKey === "." && !displayVisorHasDot):
-                    this.setState({
-                        display: String(
-                            displayVisor + clickedKey
-                        )
-                    })                    
-                    console.log(clickedKey, "<-- decimal");
-                    break;                    
-                case (clickedInOperator):
-                    // se o último caracter clicado NÃO for um operador...
-                    if (!lastDisplayIsOperator) {
+                case (clickedKey === "." 
+                      && displayVisor[displayVisor.length-1] !== "."):
+                    // caso o clique seja em "." e o último digito diferente
+                    
+                    // retorna verdadeiro se último termo tiver "."
+                    const dotInLastTerm = terms[terms.length-1]
+                    .split("")
+                    .some((value) => value === ".");
+
+                    if (!dotInLastTerm) {
+                        // se não houver "." no último termo...
                         this.setState({
-                            // atualiza o estado do display
                             display: String(
                                 displayVisor + clickedKey
                             )
+                        })    
+                    }                                        
+                    break;                    
+                case (clickedInOperator):
+                    // caso o clique seja em algum operador matemático
+                    if (!lastDisplayIsOperator) { 
+                        // BUG 5 * - + 5 should be = 10
+                        // se o último digito do display NÃO for um operador...
+                        this.setState({
+                            // atualiza o estado do display com o botão clicado
+                            display: String(displayVisor + clickedKey)
                         })
+                    } else {
+                        // se o último digito for um operador
+                        // penultimo é um operador ?
+                        const beforeLastIsOperator = ["+", "-", "/", "X"].
+                        some(
+                            (value) => value === displayVisor
+                            .toString()[displayLength-1]
+                        );
+                        if (clickedKey === "-") {
+                            // se o botao clicado for subtração
+                            this.setState({
+                                // atualiza o estado do display
+                                display: !beforeLastIsOperator 
+                                ? String(displayVisor + clickedKey)
+                                : String(displayVisor.slice(
+                                0, displayLength) + clickedKey)
+                            })
+                        } else {
+                        this.setState({
+                            display: beforeLastIsOperator 
+                            ? String(displayVisor.slice(
+                                0, displayLength-1) + clickedKey)
+                            : String(displayVisor.slice(
+                                0, displayLength) + clickedKey)
+                        })
+                        }
                     }
-                    console.log(clickedKey, "<-- operador");
                     break;
                 case (clickedKey === "="):
-                    console.log(clickedKey, "<-- sinal de igual");
+                    // Caso o clique seja no sinal de igual
+                    // substitui X por * na formula
+                    const formula = String(this.state.expression)
+                    .replace("X", "*");
+                    // computa o resultado da expressao matematica
+                    const result = Number(eval(formula));
+                    this.setState({
+                        // atualiza o estado do display com o resultado
+                        display: result,
+                        // reseta o histórico
+                        history: [],
+                        // atualiza  o estado da expressão com o resultado
+                        expression: result
+                    })
                     break;
                 case (clickedKey == "AC"):
                     this.setState({
@@ -217,11 +279,11 @@ class Calculator extends React.Component {
                         display: 0,
                         history: []
                     })
-                    console.log(clickedKey, "<-- clear button");
                     break;
             }
         }
-    }
+        console.log(String("expression: " + this.state.expression));
+    }    
     render() {
         return(
             <div id="calculator">
