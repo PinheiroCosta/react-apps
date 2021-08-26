@@ -1,0 +1,101 @@
+$bgColor: #003050;
+
+#root {
+	display: flex;
+	justify-content: center;	
+	align-items: center;
+	background: $bgColor;
+}
+h2 {
+	font-size: 26px;
+}
+body {	
+	font-family: Russo One;
+	user-select: none;
+	background: linear-gradient(
+		to bottom, $bgColor, darken($bgColor, 5%)
+	);
+	height: 100vh;
+}
+
+img { 
+	width: 300px;
+	height: 300px;
+	border-radius: 5px;
+	object-fit: cover;
+	margin: 0 20px;	
+	overflow: hidden;	
+}
+
+img:hover + figcaption {
+	opacity: 1;
+}
+
+figcaption {
+	background: #111;
+	opacity: 0;
+	transition: all 0.5s ease;
+	border-radius: 2px;
+}
+.icon {
+	display: inline;
+}
+.camera {
+	border-radius: 50%;
+	background: #050505;
+	position: relative;
+	padding: 0.1rem 0.4rem;
+	right: 30px;
+	color: #222;
+}
+.main-app {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.slider {
+	margin-top: 50px;
+	margin-bottom: 100px;
+	background: darken($bgColor, 4.5%);
+	border-radius: 15px;
+	color: white;
+	width: 340px;
+	height: 410px;
+	> a {
+		display: inline-flex;
+		width: 1rem;
+		height: 1rem;
+		background: white;	
+		border-radius: 50%;
+		margin: 0.2rem;
+	}
+	> a:active {
+		background: #555;
+	}
+	> a:focus {
+		background: #555;
+	}
+}
+ 
+.slides {
+	display: flex;
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+	margin: 0;	
+}
+
+
+@media screen and (max-height: 400px) {
+	/* Em telas que sejam menores que 400px, 
+	diminui o tamanho do slider e das imagens */
+	.slider {
+		width: 260px;
+		height: 270px;
+	}
+	img {
+		width: 220px;
+		height: 200px;
+		margin-top: -40px;
+	}
+}
