@@ -18,3 +18,7 @@ Click on the app's title to preview it at codepen.
 
 <img src="https://user-images.githubusercontent.com/37278803/130430880-e5be1784-891c-42a2-a624-e7a88a48f551.png" width="600">
 
+## [Carousel Manager](https://codepen.io/pinheirocosta/full/VwWYLKm)
+
+<img src="https://user-images.githubusercontent.com/37278803/131027366-708e3bb1-c495-47d2-aec6-f3d05428415a.png" width="600">
+
