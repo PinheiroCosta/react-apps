@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './style.scss';
 
 // Configuração padrão
-const MAX_IMAGE_LENGTH = 8; // valor inicial
+const MAX_IMAGE_LENGTH = 3; // valor inicial
 
 const assets = {
 	// Simula as entradas de um banco de dados
@@ -62,6 +62,8 @@ class Slider extends React.Component {
 	// Slider do carrossel
 	constructor(props) {
 		super(props);
+		const maxImages = this.props.maxImages;
+		const selectedImages = this.props.images;
 		if (this.props.images) {
 			/* + TODO refatorar +
 				Necessário para computar corretamente o laço de repetição
@@ -81,14 +83,20 @@ class Slider extends React.Component {
 			var maxLengthInitialValue = 1;
 		}		
 		this.state = {
-			nImages: this.props.maxImages 	// se maxImages for informado ... [inteiro]
-			? this.props.maxImages 	// máximo de imagens é definido pelo usuario
-			: maxLengthInitialValue, 	// se não, o máximo de imagens é definido pelo sistema
+			// se maxImages for menor ou igual ao valor maximo... [inteiro]
+			nImages: maxImages && maxImages <= MAX_IMAGE_LENGTH
+			// máximo de imagens é definido pelo usuario
+			? maxImages
+			// se não, o máximo de imagens é definido pelo sistema
+			: maxLengthInitialValue, 	
 			showIcons: this.props.icons,	// Mostra os ícones?	[boleano]
 			sliderTitle: this.props.title,	// título do carrossel	[string]
-			selectedImages: this.props.images.length >= 1 // Se houver imagens...
-			? this.props.images // recebe as imagens do componente [lista de objetos]
-			: assets.default,	// senão recebe imagem de erro	
+			// Se houver imagens...
+			selectedImages: selectedImages && selectedImages.length >= 1 			
+			// recebe as imagens do componente [lista de objetos]
+			? selectedImages
+			// senão recebe imagem de erro
+			: assets.default,		
 		}
 		
 		window.addEventListener("hashchange", function () {
@@ -183,7 +191,7 @@ class CarouselManager extends React.Component {
 				<Slider 
 					sliderId="0" 
 					title="Top Selfies" 
-					images={assets.selfies} 
+					images={assets.selfies}
 					icons={true}/>				
 			</div>			
 		);
