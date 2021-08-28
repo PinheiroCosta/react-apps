@@ -64,24 +64,20 @@ class Slider extends React.Component {
 		super(props);
 		const maxImages = this.props.maxImages;
 		const selectedImages = this.props.images;
-		if (this.props.images) {
-			/* + TODO refatorar +
-				Necessário para computar corretamente o laço de repetição
+		if (selectedImages && selectedImages.length > MAX_IMAGE_LENGTH) {
+			/*  Necessário para computar corretamente o laço de repetição
 				do número de âncoras e imagens; 
 			 	Recebe a quantidade de imagens que existir na lista selecionada
 				pelo banco de dados	ou o máximo de imagens pré estabelecido 
 				na constante MAX_IMAGE_LENGTH
 			*/
-			var maxLengthInitialValue = this.props.images.length > MAX_IMAGE_LENGTH 
-			? MAX_IMAGE_LENGTH 
-			: this.props.images.length <= 1 
-			? 1
-			: this.props.images.length;
-		} else {
-			/* Caso não haja imagens informadas pelo banco de dados
-			 recebe o valor mínimo de 1*/
+			var maxLengthInitialValue = MAX_IMAGE_LENGTH;
+		} else if (!selectedImages || selectedImages.length <= 1) {
 			var maxLengthInitialValue = 1;
-		}		
+		} else {
+			var maxLengthInitialValue = selectedImages.length;
+		}
+	
 		this.state = {
 			// se maxImages for menor ou igual ao valor maximo... [inteiro]
 			nImages: maxImages && maxImages <= MAX_IMAGE_LENGTH
@@ -92,7 +88,7 @@ class Slider extends React.Component {
 			showIcons: this.props.icons,	// Mostra os ícones?	[boleano]
 			sliderTitle: this.props.title,	// título do carrossel	[string]
 			// Se houver imagens...
-			selectedImages: selectedImages && selectedImages.length >= 1 			
+			selectedImages: selectedImages && selectedImages.length >= 1 		
 			// recebe as imagens do componente [lista de objetos]
 			? selectedImages
 			// senão recebe imagem de erro
@@ -191,7 +187,7 @@ class CarouselManager extends React.Component {
 				<Slider 
 					sliderId="0" 
 					title="Top Selfies" 
-					images={assets.selfies}
+					images={assets.selfies}					
 					icons={true}/>				
 			</div>			
 		);
