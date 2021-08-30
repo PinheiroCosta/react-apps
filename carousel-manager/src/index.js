@@ -85,7 +85,7 @@ class Slider extends React.Component {
 			? maxImages
 			// se não, o máximo de imagens é definido pelo sistema
 			: maxLengthInitialValue, 	
-			showIcons: this.props.icons,	// Mostra os ícones?	[boleano]
+			showIcons: !this.props.icons ? false : true,	// Mostra os ícones?	[boleano]
 			sliderTitle: this.props.title,	// título do carrossel	[string]
 			// Se houver imagens...
 			selectedImages: selectedImages && selectedImages.length >= 1 		
@@ -182,13 +182,19 @@ class CarouselManager extends React.Component {
 		}		
 	}; 
 	render() {
+		{/* sliderId = necessário para renderizar corretamenta os componentes 
+			title = (opcional) adicione um título ao slider
+			images = adicione imagens [lista de objetos]
+			maxImages = (opcional )número máximo de imagens 
+			icons = (opcional) ativa os ícones
+		*/}
 		return (
 			<div className="main-app">
 				<Slider 
 					sliderId="0" 
 					title="Top Selfies" 
 					images={assets.selfies}					
-					icons={true}/>				
+					/>				
 			</div>			
 		);
 	}
