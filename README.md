@@ -30,9 +30,3 @@ Click on the app's title to preview it at codepen.
 
 > A calculator app to use inside the browser  
 > Created as part of a [FreeCodeCamp](https://www.freecodecamp.org/learn/front-end-development-libraries/front-end-development-libraries-projects/build-a-drum-machine) Challenge
-
-## [Carousel Manager](https://codepen.io/pinheirocosta/full/VwWYLKm)
-
-<img src="https://user-images.githubusercontent.com/37278803/131027366-708e3bb1-c495-47d2-aec6-f3d05428415a.png" width="600">
-
-> A carousel manager capable of customize carousels (Work in Progress)
