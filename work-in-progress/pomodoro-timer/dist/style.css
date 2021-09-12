@@ -1,0 +1,82 @@
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+@font-face {
+  font-family: "Digital";
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot");
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff") format("woff"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7") format("svg");
+}
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #025;
+  color: white;
+}
+
+#pomodoro {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: -25px;
+}
+#pomodoro a:first-child {
+  margin-top: 10px;
+  color: green;
+}
+#pomodoro a:active {
+  color: yellow;
+}
+#pomodoro a {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0;
+  color: red;
+}
+#pomodoro a i {
+  font-size: 30px;
+  margin: 1px;
+}
+#pomodoro div {
+  text-align: center;
+}
+#pomodoro #break-label, #pomodoro #session-label {
+  display: inline;
+  padding: 0 10px;
+}
+
+#time-left {
+  border-radius: 10px;
+  padding: 0 20px 20px 20px;
+  background-color: #111;
+  color: #ccc;
+  font-size: 110px;
+  font-family: digital;
+  text-align: center;
+}
+
+#timer-label {
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+#player {
+  display: flex;
+  justify-content: space-around;
+  font-size: 2.5em;
+  color: white;
+}
+#player a:visited {
+  color: white;
+}
+#player #play:active {
+  color: green;
+}
+#player #pause:active {
+  color: yellow;
+}
+#player #stop:active {
+  color: red;
+}
