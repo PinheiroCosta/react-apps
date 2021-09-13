@@ -3,35 +3,56 @@ import ReactDOM from 'react-dom';
 import './style.scss';
 
 
+class Button extends React.Component {
+  render() {
+    return(
+      <a id={this.props.id} href={this.props.href}>
+        <i className={this.props.icon}></i>
+      </a>
+    )
+  }
+}
+
+class LengthControl extends React.Component {
+  render() {
+    const title = this.props.title;
+    return(
+      <div id={String(title + '-label')}>
+        {title.charAt(0).toUpperCase() + title.slice(1)}
+        <Button 
+          id={String(title + '-increment')}
+          href={this.props.href}
+          icon='bi bi-caret-up-fill'
+          />
+        
+        <div id={String(title+ '-length')}>
+          {this.props.value}
+        </div>
+        
+        <Button 
+          id={String(title + '-decrement')} 
+          href={this.props.href}
+          icon="bi bi-caret-down-fill"
+          />
+      </div>
+    )
+  }  
+}
+
 class Pomodoro extends React.Component {
   render() {
     return(
       <div id="pomodoro">
-        <div id="break-label">
-          Break 
-          <a id="break-increment" href="#">
-            <i className="bi bi-caret-up-fill"></i>       
-          </a>
-
-          <div id="break-length">5</div>
-
-          <a id="break-decrement" href="#">
-            <i className="bi bi-caret-down-fill"></i>  
-          </a>
-        </div>
-        <div id="session-label">Session 
-          <a id="session-increment" href="#">
-            <i className="bi bi-caret-up-fill"></i>  
-          </a>
-
-          <div id="session-length">
-            {this.props.minutesLeft}
-          </div>
-
-          <a id="session-decrement" href="#">
-            <i className="bi bi-caret-down-fill"></i>  
-          </a>
-        </div>
+        <LengthControl 
+          title='break'
+          value={this.props.break}
+          href="#"
+          />
+        <LengthControl 
+          title='session'
+          value={this.props.session}
+          href="#"
+          />
       </div>
     )
   }
@@ -54,9 +75,21 @@ class Player extends React.Component {
   render() {
     return(
       <div id="player">
-        <a id="play" href="#"><i className="bi bi-play-fill"></i></a> 
-        <a id="pause" href="#"><i className="bi bi-pause-fill"></i></a>         
-        <a id="stop" href="#"><i className="bi bi-stop-fill"></i></a>        
+        <Button 
+          id="play" 
+          href="#"
+          icon="bi bi-play-fill"            
+        /> 
+        <Button 
+          id="pause" 
+          href="#"
+          icon="bi bi-pause-fill"           
+        />         
+        <Button 
+          id="stop" 
+          href="#"
+          icon="bi bi-stop-fill"
+        />        
       </div>
     )
   }
@@ -66,30 +99,55 @@ class TimerApp extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      timer: new Date(0, 0, 0, 0, 25, 0),
+      timer: 1500,
+      break: 5,
+      session: 25,
+      timerActive: false,
+    }
+    this.handleClick = this.handleClick.bind(this);
+    this.clockFormat = this.clockFormat.bind(this);
+  } 
+  componentDidMount() {
+    document.addEventListener('click', this.handleClick);
+  }
+
+  handleClick(event) {
+    const element = event.target.parentElement;
+    console.log(element.tagName);
+  }
+  
+  clockFormat() { // [String]
+    // return the time in mm:ss format
+    let minutes = Math.floor(this.state.timer / 60);
+    let seconds = this.state.timer - minutes * 60;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    
+    return  String(minutes +":"+ seconds)
+  }
+  
+  getMinutes() { // [string]
+    // Return the minutes of the timer with a leading zero
+    let minutes = Math.floor(this.state.timer / 60);
+    if (minutes < 10) {
+      return String('0' + minutes);
+    } else {
+      return String(minutes);
     }
   }
   
   render() {
-    const clockOptions = {
-      minute: '2-digit', 
-      second: '2-digit',
-    };    
-    // handle sixty minutes in session length
-    const minutesLeft = this.state.timer.getHours()
-    ? 60 
-    : this.state.timer.getMinutes();
-    // handle sixty minutes in the timer
-    const timer = this.state.timer.getHours() 
-    ? "60:00"
-    : this.state.timer.toLocaleTimeString([],clockOptions);
-    
-    console.log(timer);
+    const breakLength = this.state.break;
+    const sessionLength = this.state.session;
     
     return(
-      <div id="timer">
-        <Pomodoro minutesLeft={minutesLeft}/>
-        <Clock timer={timer}/>
+      <div id="timerApp">
+        <Pomodoro 
+          session={sessionLength} 
+          break={breakLength}
+          onClick={this.handleClick}
+          />
+        <Clock timer={this.clockFormat()}/>
         <Player />
       </div>
     )
