@@ -25,7 +25,7 @@ class LengthControl extends React.Component {
           icon='bi bi-caret-up-fill'
           />
         
-        <div id={String(title+ '-length')}>
+        <div id={String(title + '-length')}>
           {this.props.value}
         </div>
         
@@ -75,21 +75,25 @@ class Player extends React.Component {
   render() {
     return(
       <div id="player">
-        <Button 
-          id="play" 
-          href="#"
-          icon="bi bi-play-fill"            
-        /> 
-        <Button 
-          id="pause" 
-          href="#"
-          icon="bi bi-pause-fill"           
-        />         
-        <Button 
-          id="stop" 
-          href="#"
-          icon="bi bi-stop-fill"
-        />        
+        <div id="start_stop">
+          <Button 
+            id="play" 
+            href="#"
+            icon="bi bi-play-fill"            
+          /> 
+          <Button 
+            id="pause" 
+            href="#"
+            icon="bi bi-pause-fill"           
+          />
+        </div>
+        <div id="reset">
+          <Button 
+            id="stop" 
+            href="#"
+            icon="bi bi-stop-fill"
+          />
+        </div>
       </div>
     )
   }
@@ -113,7 +117,40 @@ class TimerApp extends React.Component {
 
   handleClick(event) {
     const element = event.target.parentElement;
-    console.log(element.tagName);
+    // console.log(element.tagName);
+    console.log(element.id);
+    // Control Break & session Length
+    if (element.id === "break-decrement") {
+      this.setState({
+        break: this.state.break > 1 
+        ? this.state.break - 1 
+        : this.state.break
+      })
+    } else if (element.id === "break-increment") {
+      this.setState({
+        break: this.state.break >= 0 && this.state.break < 60
+        ? this.state.break + 1
+        : this.state.break
+      })
+    } else if (element.id === "session-increment") {
+      this.setState({
+        session: this.state.session >= 1 && this.state.session < 60
+        ? this.state.session + 1
+        : this.state.session,
+        timer: this.state.session < 60 
+        ? Math.floor(this.state.session * 60) + 60
+        : Math.floor(this.state.session * 60)
+      })
+    } else if (element.id === "session-decrement") {
+      this.setState({
+        session: this.state.session > 1
+        ? this.state.session - 1
+        : this.state.session,
+        timer: this.state.session > 1 
+        ? Math.floor(this.state.session * 60) - 60
+        : Math.floor(this.state.session * 60)
+      })
+    }
   }
   
   clockFormat() { // [String]
@@ -123,9 +160,9 @@ class TimerApp extends React.Component {
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
     
-    return  String(minutes +":"+ seconds)
+    return  minutes + ":" + seconds ;
   }
-  
+    
   getMinutes() { // [string]
     // Return the minutes of the timer with a leading zero
     let minutes = Math.floor(this.state.timer / 60);
